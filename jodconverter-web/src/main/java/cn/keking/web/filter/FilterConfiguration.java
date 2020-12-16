@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import java.util.HashSet;
 import java.util.Set;
 
-
 /**
  *
  * @author yudian-it
@@ -15,7 +14,6 @@ import java.util.Set;
  */
 @Configuration
 public class FilterConfiguration {
-
 
     @Bean
     public FilterRegistrationBean getChinesePathFilter() {
@@ -58,6 +56,18 @@ public class FilterConfiguration {
         filterUri.add("/onlinePreview");
         filterUri.add("/picturesPreview");
         WatermarkConfigFilter filter = new WatermarkConfigFilter();
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(filter);
+        registrationBean.setUrlPatterns(filterUri);
+        return registrationBean;
+    }
+
+    @Bean
+    public FilterRegistrationBean getAuthFilter() {
+        Set<String> filterUri = new HashSet<>();
+        filterUri.add("/onlinePreview");
+        filterUri.add("/picturesPreview");
+        AuthFilter filter = new AuthFilter();
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(filter);
         registrationBean.setUrlPatterns(filterUri);

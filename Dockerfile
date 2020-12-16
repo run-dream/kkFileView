@@ -12,17 +12,17 @@ RUN echo "deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe m
 	apt-get install ttf-wqy-microhei &&\
 	apt-get install ttf-wqy-zenhei &&\
 	apt-get install xfonts-wqy &&\
-    cd /tmp &&\
+	cd /tmp &&\
 	wget https://kkfileview.keking.cn/server-jre-8u251-linux-x64.tar.gz &&\
 	wget https://kkfileview.keking.cn/Apache_OpenOffice_4.1.6_Linux_x86-64_install-deb_zh-CN.tar.gz -cO openoffice_deb.tar.gz &&\
 	tar -zxf /tmp/server-jre-8u251-linux-x64.tar.gz && mv /tmp/jdk1.8.0_251 /usr/local/ &&\
 	tar -zxf /tmp/openoffice_deb.tar.gz && cd /tmp/zh-CN/DEBS &&\
 	dpkg -i *.deb && dpkg -i desktop-integration/openoffice4.1-debian-menus_4.1.6-9790_all.deb &&\
 	rm -rf /tmp/* && rm -rf /var/lib/apt/lists/* &&\
-    cd /usr/share/fonts/chienes &&\
-    mkfontscale &&\
-    mkfontdir &&\
-    fc-cache -fv
+	cd /usr/share/fonts/chienes &&\
+	mkfontscale &&\
+	mkfontdir &&\
+	fc-cache -fv
 ENV JAVA_HOME /usr/local/jdk1.8.0_251
 ENV CLASSPATH $JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 ENV PATH $PATH:$JAVA_HOME/bin
