@@ -18,6 +18,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -62,11 +63,11 @@ public class AuthFilter implements Filter {
     private boolean validAuth(ServletRequest request) {
         Map<String, String[]> map = request.getParameterMap();
         String authUrl = ConfigConstants.getAuthUrl();
+        String successPath = ConfigConstants.getAuthSuccessPath();
         ArrayList<String> queries = new ArrayList<String>();
         URLEncoder encoder = URLEncoder.createDefault();
         try {
             map.forEach((key, value) -> {
-
                 queries.add(key + "=" + String.join(",", value));
             });
             URL url = new URL(authUrl + "?" + encoder.encode(String.join("&", queries), Charset.forName("UTF-8")));
@@ -89,7 +90,12 @@ public class AuthFilter implements Filter {
             }
             String result = sbf.toString();
             JSONObject jsonObj = new JSONObject(result);
-            return jsonObj.getBoolean("success");
+            String[] paths = successPath.split("\\.");
+            JSONObject deepObj = jsonObj;
+            for (int i = 0; i < paths.length - 1; i++) {
+                deepObj = deepObj.getJSONObject(paths[i]);
+            }
+            return deepObj.getBoolean(paths[paths.length - 1]);
         } catch (Exception e) {
             e.printStackTrace();
         }

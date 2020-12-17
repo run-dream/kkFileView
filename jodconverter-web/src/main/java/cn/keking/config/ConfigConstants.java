@@ -29,7 +29,8 @@ public class ConfigConstants {
     private static String PDF_DOWNLOAD_DISABLE;
     private static Boolean AUTH_ENABLED;
     private static String AUTH_URL;
-
+    private static String AUTH_SUCCESS_PATH;
+    private static String DOWNLOAD_PREFIX;
     public static final String DEFAULT_CACHE_ENABLED = "true";
     public static final String DEFAULT_TXT_TYPE = "txt,html,htm,asp,jsp,xml,json,properties,md,gitignore,log,java,py,c,cpp,sql,sh,bat,m,bas,prg,cmd";
     public static final String DEFAULT_MEDIA_TYPE = "mp3,wav,mp4,flv";
@@ -42,6 +43,8 @@ public class ConfigConstants {
     public static final String DEFAULT_TRUST_HOST = "default";
     public static final String DEFAULT_PDF_DOWNLOAD_DISABLE = "true";
     public static final String DEFAULT_AUTH_URL = "";
+    public static final String DEFAULT_AUTH_SUCCESS_PATH = "success";
+    public static final String DEFAULT_PREFIX = "";
 
     public static Boolean isCacheEnabled() {
         return CACHE_ENABLED;
@@ -229,5 +232,31 @@ public class ConfigConstants {
 
     public static String getAuthUrl() {
         return AUTH_URL;
+    }
+
+    @Value("${auth.success-path:default}")
+    public void setAuthSuccessValue(String authUrl) {
+        setAuthSuccessPathValue(authUrl);
+    }
+
+    public static void setAuthSuccessPathValue(String authSuccessPath) {
+        AUTH_SUCCESS_PATH = authSuccessPath;
+    }
+
+    public static String getAuthSuccessPath() {
+        return AUTH_SUCCESS_PATH;
+    }
+
+    @Value("${base.download-prefix:}")
+    public void setDownloadPrefix(String downloadPrefix) {
+        setDownloadPrefixValue(downloadPrefix);
+    }
+
+    public static void setDownloadPrefixValue(String downloadPrefix) {
+        DOWNLOAD_PREFIX = downloadPrefix;
+    }
+
+    public static String getDownloadPrefix() {
+        return DOWNLOAD_PREFIX;
     }
 }
